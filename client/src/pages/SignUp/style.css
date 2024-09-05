@@ -1,0 +1,97 @@
+.signin_background{
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),url('../../assets/images/lock.png');
+    height: 100vh;
+    width: 100vw; 
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.box{
+    background: transparent;
+    border: 2px, solid, rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(15px);
+    height: 80vh;
+    width: 30vw;
+    border-radius: 20px;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    padding: 30px;
+}
+.login{
+    margin-top: 50px;
+    font-size: 50px;
+    font-weight: 900;
+}
+.checkAccount{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.input{
+    width: 30vw;
+    height: 6vh;
+    border-radius: 20px;
+    background-color: transparent;
+    border: 2px, solid, white;
+    color: white;
+    padding-left: 15px;
+    margin-top: 10px;
+}
+::placeholder {
+    color: rgba(193, 193, 193, 0.5);
+    opacity: 1;
+  }
+  .checkAccountButtonIcon{
+    height: 60px;
+    width: 60px;
+    color: white;
+  }
+  .checkAccountButton{
+    margin-top: 40px;
+    padding: 10px;
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 70px;
+    color: white;
+    border: 2px, solid, white;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .routeToOther{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    grid-area: 10px;
+    margin-top: 10px;
+  }
+  .google{
+    margin-top: 10px;
+    padding: 10px;
+    height: 50px;
+    width: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 70px;
+    color: white;
+    border: 2px, solid, white;
+  }
+  .checkAccountContainer{
+   display: flex;
+   flex-direction: column;
+   align-items: center; 
+  }
+  .googleLogo{
+    height: 30px;
+    width: 30px;
+  }
