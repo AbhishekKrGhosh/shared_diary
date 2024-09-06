@@ -1,0 +1,92 @@
+.side-menu {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 250px;
+    height: 100%;
+    background: transparent;
+    border: 2px, solid, rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(15px);
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.3);
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .side-menu.visible {
+    transform: translateX(0);
+  }
+  
+  .side-menu .close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    font-size: 20px;
+    cursor: pointer;
+    background: #33333390;
+    color: white;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .side-menu .close-btn:hover{
+    background-color: #555;
+  }
+  
+  .side-menu .menu-items {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 20px; /* Optional: for some padding around menu items */
+  }
+  
+  .side-menu .menu-items ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* Space between items */
+  }
+  
+  .side-menu .menu-items ul li {
+    padding: 15px;
+    font-size: 18px;
+    cursor: pointer;
+    color: white;
+    font-weight: 700;
+    background-color: #33333390; /* Optional: to make items more distinct */
+    text-align: center;
+  }
+  
+  .side-menu .menu-items ul li:hover {
+    background-color: #555; /* Optional: to highlight items on hover */
+  }
+  
+  .side-menu .signout-container {
+    margin-top: auto; /* Pushes the container to the bottom */
+    padding: 20px;
+  }
+  
+  .side-menu .signoutbutton {
+    display: block;
+    padding: 15px;
+    font-size: 18px;
+    cursor: pointer;
+    color: white;
+    font-weight: 700;
+    background-color: #d9534f; /* Color for the sign-out button */
+    text-align: center;
+  }
+  .side-menu .signoutbutton:hover{
+    background-color: #ff4c46;
+  }
+  

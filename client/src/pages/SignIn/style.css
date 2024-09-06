@@ -94,3 +94,22 @@
     height: 30px;
     width: 30px;
   }
+
+  /* Other styles */
+
+.routeToOther {
+  margin-top: 20px;
+}
+.routeToOtherLink{
+  text-decoration: none;
+}
+.linkText{
+  color: white;
+}
+.link {
+  color: #3FA2F6;
+}
+
+.link:hover {
+  text-decoration: underline;
+}

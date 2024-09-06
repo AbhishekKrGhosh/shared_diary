@@ -14,45 +14,59 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsisV } from '@fortawesome/free-solid-svg-icons'
 import Diary from '../../components/Diary/Diary'
 import ToDo from '../../components/ToDo/ToDo'
+import SideMenu from '../../components/SideMenu/SideMenu'
 
 
 const Main = () => {
-    const dynamicImageUrl = dream;
-    const [isShared, setIsShared] = useState(true); // Toggle between shared and personal
-  
-    const handleToggle = () => {
-      setIsShared(!isShared); // Toggle the state
-    };
-  
-    return (
-      <div className='main' style={{backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${dynamicImageUrl})`}}>
-        <div style={{height: '50px', width: '50px', borderRadius: '50px', marginTop: '10px', marginLeft: '10px',padding:'2px',border:'2px, solid, white', position: 'absolute'}}>
-        <img style={{height: '50px', width: '50px', borderRadius: '50px'}} src={logo} alt="Logo" />
-        </div>
-        
-        <div className='toggle-container'>
-          <label className='switch'>
-            <input type='checkbox' checked={isShared} onChange={handleToggle} />
-            <span className='slider'>
-              <span className='slider-label'>{isShared ? 'Shared' : 'Personal'}</span>
-            </span>
-          </label>
-        </div>
-            <div className='options'>
-                <div className='sharedOptions'>
-                <div className='clip'>Diary</div>
-                <div className='clip' style={{background:'#4CAF50',color:'#fff'}}>ToDo</div>
-                <div className='clip'>Timeline</div>
-                <div className='clip'>Group Chat</div>
-                <FontAwesomeIcon className='clipThreeDot' icon={faEllipsisV}/>
-                </div>
-            </div>
-            <div className='contentArea'>
-                {/* <Diary/> */}
-                <ToDo/>
-            </div>
-      </div>
-    );
+  const dynamicImageUrl = dream;
+  const [isShared, setIsShared] = useState(true);
+  const [menuVisible, setMenuVisible] = useState(false); // Manage side menu visibility
+
+  const handleToggle = () => {
+    setIsShared(!isShared);
   };
-  
-  export default Main;
+
+  const handleMenuClick = () => {
+    setMenuVisible(true);
+  };
+
+  const handleCloseMenu = () => {
+    setMenuVisible(false);
+  };
+
+  return (
+    <div className='main' style={{ backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${dynamicImageUrl})` }}>
+      <div style={{ height: '50px', width: '50px', borderRadius: '50px', marginTop: '10px', marginLeft: '10px', padding: '2px', border: '2px solid white', position: 'absolute' }}>
+        <img style={{ height: '50px', width: '50px', borderRadius: '50px' }} src={logo} alt="Logo" />
+      </div>
+
+      <div className='toggle-container'>
+        <label className='switch'>
+          <input type='checkbox' checked={isShared} onChange={handleToggle} />
+          <span className='slider'>
+            <span className='slider-label'>{isShared ? 'Shared' : 'Personal'}</span>
+          </span>
+        </label>
+      </div>
+      
+      <div className='options'>
+        <div className='sharedOptions'>
+          <div className='clip'>Diary</div>
+          <div className='clip' style={{ background: '#4CAF50', color: '#fff' }}>ToDo</div>
+          <div className='clip'>Timeline</div>
+          <div className='clip'>Group Chat</div>
+          <FontAwesomeIcon className='clipThreeDot' icon={faEllipsisV} onClick={handleMenuClick} />
+        </div>
+      </div>
+
+      <div className='contentArea'>
+        {/* <Diary/> */}
+        <ToDo />
+      </div>
+
+      <SideMenu isVisible={menuVisible} onClose={handleCloseMenu} />
+    </div>
+  );
+};
+
+export default Main;

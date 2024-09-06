@@ -29,7 +29,7 @@
     font-weight: 900;
     text-align: center;
 }
-.login2{
+.account-by-other-text{
   margin-top: 5px;
   font-size: 15px;
   font-weight: 200;
@@ -101,3 +101,20 @@
     height: 30px;
     width: 30px;
   }
+  .routeToOther {
+    margin-top: 20px;
+  }
+  .routeToOtherLink{
+    text-decoration: none;
+  }
+  .linkText{
+    color: white;
+  }
+  .link {
+    color: #3FA2F6;
+  }
+  
+  .link:hover {
+    text-decoration: underline;
+  }
+  

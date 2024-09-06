@@ -4,12 +4,14 @@ import dotenv from 'dotenv'
 import authRoute from './routes/auth.route.js'
 import accountRoute from './routes/account.route.js'
 import cookieParser from 'cookie-parser'
+import cors from 'cors'
 
 dotenv.config()
 const app = express()
 const URL = process.env.CONNECTION_URL
 app.use(express.json())
 app.use(cookieParser())
+app.use(cors());
 mongoose.connect(URL)
 .then(()=>{
     console.log('connected')
@@ -17,8 +19,8 @@ mongoose.connect(URL)
 .catch((e)=>{
     console.log(e.message)
 })
-app.listen(3000, ()=>{
-    console.log(`Server running on port 3000`)
+app.listen(3001, ()=>{
+    console.log(`Server running on port 3001`)
 })
 
 app.use('/api/account', accountRoute)
