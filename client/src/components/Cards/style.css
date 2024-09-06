@@ -1,0 +1,12 @@
+.cards {
+    width: 75%;
+    overflow-y: auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 20px;
+    scrollbar-width: none;
+}
+.cards::-webkit-scrollbar {
+    display: none; /* Hide scrollbar */
+}

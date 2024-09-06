@@ -14,6 +14,7 @@ import nostolgia from '../../assets/images/nostolgia.png'
 import out_of_the_world from '../../assets/images/out_of_the_world.png'
 import romantic from '../../assets/images/romantic.png'
 import sun_rise from '../../assets/images/sun_rise.png'
+import logo from '../../assets/images/logo.png'
 
 const colorOptions = [
   {color:'#191970',
@@ -86,6 +87,9 @@ const Home = () => {
   return (
     <div className='home'>
       <div className='homeContent'>
+        <div className='logoContainer'>
+        <img className='logo' src={logo}/>
+        </div>
         <div className='addMembers'>
           Add Members 
           <div className='addIconContainer' onClick={handleAddClick}>

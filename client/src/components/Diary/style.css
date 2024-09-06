@@ -1,0 +1,9 @@
+.diary {
+    width: 100%;
+    display: flex;
+    padding: 5px;
+    scrollbar-width: none;
+}
+.diary::-webkit-scrollbar {
+    display: none; /* Hide scrollbar */
+}

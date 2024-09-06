@@ -16,8 +16,30 @@
     align-items: center;
     justify-content: center;
 }
+.homeContent2 {
+  width: 100%;
+  height: 100%;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.logo{
+  height: 150px;
+  width: 150px;
+  border-radius: 200px;
+}
+.logoContainer{
+  margin-top: 80px;
+  height: 150px;
+  width: 150px;
+  border-radius: 200px;
+  border: 2px, solid, white;
+  padding: 3px;
+}
 .addMembers {
-    margin-top: 100px;
+    margin-top: 20px;
     font-size: 60px;
     display: flex;
     justify-content: center;

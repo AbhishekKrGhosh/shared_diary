@@ -1,0 +1,73 @@
+.form {
+    width: 25%;
+    right: 0;
+    position: fixed; 
+    margin-right: 30px;
+    margin-top: 40px;
+    
+}
+.box2{
+    background: transparent;
+    border: 2px, solid, rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(40px);
+    border-radius: 20px;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.login2{
+    font-size: 30px;
+    font-weight: 900;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+.checkAccount2{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.input2{
+    background-color: transparent;
+    border: 2px, solid, white;
+    color: white;
+    width: 20vw;
+    border-radius: 5px;
+    padding-left: 10px;
+    height: 40px;
+    margin-top: 10px;
+}
+::placeholder {
+    color: rgba(193, 193, 193, 0.5);
+    opacity: 1;
+  }
+  .checkAccountButtonIcon2{
+    height: 60px;
+    width: 60px;
+    color: white;
+  }
+  .checkAccountButton2{
+    margin-top: 10px;
+    padding: 10px;
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 70px;
+    color: white;
+    border: 2px, solid, white;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .routeToOther2{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    grid-area: 10px;
+  }
+  .checkAccountContainer2{
+   display: flex;
+   flex-direction: column;
+   align-items: center; 
+  }
