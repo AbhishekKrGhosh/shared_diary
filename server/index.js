@@ -2,6 +2,7 @@ import express from 'express'
 import mongoose from 'mongoose'
 import dotenv from 'dotenv'
 import authRoute from './routes/auth.route.js'
+import accountRoute from './routes/account.route.js'
 import cookieParser from 'cookie-parser'
 
 dotenv.config()
@@ -20,7 +21,7 @@ app.listen(3000, ()=>{
     console.log(`Server running on port 3000`)
 })
 
-
+app.use('/api/account', accountRoute)
 app.use('/api/auth', authRoute)
 app.use((err, req, res, next)=>{
     const statusCode = err.statusCode || 500
