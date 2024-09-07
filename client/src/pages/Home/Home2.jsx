@@ -47,7 +47,7 @@ const Home2 = () => {
   const handleSave = async ()=>{
     try {
       const response = await axios.patch(
-        `http://localhost:3001/api/account/${accountName}/update-theme-color`,
+        `https://shared-diary-1.onrender.com/api/account/${accountName}/update-theme-color`,
         {
           account_name:accountName,
           email: currentUser,

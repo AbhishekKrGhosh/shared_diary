@@ -26,7 +26,7 @@ const SignUp2 = () => {
       setError(false);
       console.log(formData);
       const res = await axios.post(
-        "http://localhost:3001/api/auth/signup",
+        "https://shared-diary-1.onrender.com/api/auth/signup",
         formData
       );
       const data = res;
@@ -41,7 +41,7 @@ const SignUp2 = () => {
         let mail = formData.email;
         console.log("email:", mail, "| accout name: ", accountName);
         const res2 = await axios.post(
-          "http://localhost:3001/api/account/create",
+          "https://shared-diary-1.onrender.com/api/account/create",
           {
             account_name: accountName,
             email: mail,

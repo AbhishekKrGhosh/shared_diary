@@ -29,7 +29,7 @@ const Members = () => {
   };
   useEffect(()=>{
     const getEmails = async()=>{
-        const res = await axios.get(`http://localhost:3001/api/account/${accountName}/emails`)
+        const res = await axios.get(`https://shared-diary-1.onrender.com/api/account/${accountName}/emails`)
         setEmailList(res.data.emails)
     }
     getEmails()
@@ -46,7 +46,7 @@ const Members = () => {
 
     try {
       const response = await axios.patch(
-        "http://localhost:3001/api/account/add-email",
+        "https://shared-diary-1.onrender.com/api/account/add-email",
         {
           account_name: accountName,
           email,

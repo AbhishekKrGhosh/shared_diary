@@ -20,7 +20,7 @@ const AccountByOthers1 = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
-      const response = await axios.get(`http://localhost:3001/api/account/check/${accountName}`)
+      const response = await axios.get(`https://shared-diary-1.onrender.com/api/account/check/${accountName}`)
       if (response.data.exists) {
         dispatch(updateAccountName({ accountName }))
         navigate('/create-by-others-sign-up')

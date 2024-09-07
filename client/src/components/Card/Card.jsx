@@ -14,14 +14,14 @@ const Card = ({ diary }) => {
 console.log(diary.email)
 useEffect(()=>{
   const getColor = async()=>{
-    const res = await axios.get(`http://localhost:3001/api/account/${accountName}/color/${diary.email}`)
+    const res = await axios.get(`https://shared-diary-1.onrender.com/api/account/${accountName}/color/${diary.email}`)
     setNewColor(res.data.color)
   }
   getColor()
 },[newColor])
   const handleDelete = async () => {
     try {
-      await axios.delete(`http://localhost:3001/api/account/diaries/${accountName}/${diary._id}`);
+      await axios.delete(`https://shared-diary-1.onrender.com/api/account/diaries/${accountName}/${diary._id}`);
       dispatch(toggle())
     } catch (error) {
       console.error('Error deleting diary', error);

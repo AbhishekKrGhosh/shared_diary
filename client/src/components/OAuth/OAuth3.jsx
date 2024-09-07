@@ -22,7 +22,7 @@ const OAuth3 = () => {
             const auth = getAuth(app)
             const result = await signInWithPopup(auth, provider)
 
-            const res = await axios.post('http://localhost:3001/api/auth/google', {
+            const res = await axios.post('https://shared-diary-1.onrender.com/api/auth/google', {
                 name: result.user.displayName,
                 email: result.user.email,
                 photo: result.user.photoURL
@@ -34,7 +34,7 @@ const OAuth3 = () => {
                 let mail = data.email
 
                 console.log("accountName: ",accountName, "| mail: ",mail)
-                const res = await axios.get(`http://localhost:3001/api/account/${accountName}/email/${mail}`)
+                const res = await axios.get(`https://shared-diary-1.onrender.com/api/account/${accountName}/email/${mail}`)
                 dispatch(signInSuccess(data.email))
                 dispatch(updateAccountInfo({accountName, mail}))
                 navigate('/main')

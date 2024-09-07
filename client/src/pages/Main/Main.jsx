@@ -31,7 +31,7 @@ const Main = () => {
   useEffect(()=>{
     const getaAndUpdateTheme = async ()=>{
       console.log(accountName)
-      const res = await axios.get(`http://localhost:3001/api/account/${accountName}/theme`)
+      const res = await axios.get(`https://shared-diary-1.onrender.com/api/account/${accountName}/theme`)
       dispatch(updateAccountDetails({color, theme:res.data}))
     }
     getaAndUpdateTheme()

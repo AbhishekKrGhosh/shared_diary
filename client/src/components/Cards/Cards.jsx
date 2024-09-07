@@ -11,7 +11,7 @@ const Cards = () => {
   useEffect(() => {
     const fetchDiaries = async () => {
       try {
-        const response = await axios.get(`http://localhost:3001/api/account/diaries/${accountName}`);
+        const response = await axios.get(`https://shared-diary-1.onrender.com/api/account/diaries/${accountName}`);
         setDiaries(response.data.reverse());
       } catch (error) {
         console.error('Error fetching diaries', error);

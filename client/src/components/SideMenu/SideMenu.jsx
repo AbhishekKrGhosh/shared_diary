@@ -11,7 +11,7 @@ const SideMenu = ({ isVisible, onClose }) => {
     
     const handleSignout = async () => {
         try {
-            await axios.get('http://localhost:3001/api/auth/signout');
+            await axios.get('https://shared-diary-1.onrender.com/api/auth/signout');
             dispatch(signOut());
             
         } catch (error) {

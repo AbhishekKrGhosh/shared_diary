@@ -24,7 +24,7 @@ const SignUp1 = () => {
     }
 
     try {
-      const response = await axios.get(`http://localhost:3001/api/account/check/not-exist/${accountName}`);
+      const response = await axios.get(`https://shared-diary-1.onrender.com/api/account/check/not-exist/${accountName}`);
       
       if (response.data.not_exist) {
         dispatch(updateAccountName({ accountName }));

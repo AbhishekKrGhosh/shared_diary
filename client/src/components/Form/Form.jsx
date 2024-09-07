@@ -34,14 +34,14 @@ const Form = () => {
     e.preventDefault();
     try {
       if (editMode) {
-        await axios.patch(`http://localhost:3001/api/account/diaries/${accountName}/${currentDiary._id}`, {
+        await axios.patch(`https://shared-diary-1.onrender.com/api/account/diaries/${accountName}/${currentDiary._id}`, {
           ...formData,
           tags: formData.tags.split(',').map(tag => tag.trim())
         });
         dispatch(setEditMode(false));
         dispatch(resetCurrentDiary());
       } else {
-        await axios.post('http://localhost:3001/api/account/diaries', {
+        await axios.post('https://shared-diary-1.onrender.com/api/account/diaries', {
           ...formData,
           account_name: accountName,
           email: currentUser

@@ -22,7 +22,7 @@ const SignIn2 = () => {
       dispatch(signInStart());
 
       // Use axios instead of fetch
-      const res = await axios.post('http://localhost:3001/api/auth/signin', formData);
+      const res = await axios.post('https://shared-diary-1.onrender.com/api/auth/signin', formData);
       const data = res.data;
       console.log(data)
       if (data.success === false) {
@@ -31,7 +31,7 @@ const SignIn2 = () => {
       }
       try {
         let mail = data.email
-        const res = await axios.get(`http://localhost:3001/api/account/${accountName}/email/${mail}`)
+        const res = await axios.get(`https://shared-diary-1.onrender.com/api/account/${accountName}/email/${mail}`)
         dispatch(signInSuccess(data.email))
         console.log("accountName: ",accountName, "| mail: ",mail)
         dispatch(updateAccountInfo({accountName, mail}))

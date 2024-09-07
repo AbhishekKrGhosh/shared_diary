@@ -22,7 +22,7 @@ const OAuth2 = () => {
             const auth = getAuth(app)
             const result = await signInWithPopup(auth, provider)
 
-            const res = await axios.post('http://localhost:3001/api/auth/google', {
+            const res = await axios.post('https://shared-diary-1.onrender.com/api/auth/google', {
                 name: result.user.displayName,
                 email: result.user.email,
                 photo: result.user.photoURL
@@ -32,7 +32,7 @@ const OAuth2 = () => {
             console.log(data)
             try {
                 let mail = data.email
-                const res = await axios.post('http://localhost:3001/api/account/create', {
+                const res = await axios.post('https://shared-diary-1.onrender.com/api/account/create', {
                     account_name: accountName,
                     email: mail
                 })

@@ -25,7 +25,7 @@ const AccountByOthers2 = () => {
       setLoading(true)
       setError(false)
       console.log(formData)
-      const res = await axios.post('http://localhost:3001/api/auth/signup', formData);
+      const res = await axios.post('https://shared-diary-1.onrender.com/api/auth/signup', formData);
       const data = res
       setLoading(false)
       console.log(data)
@@ -35,7 +35,7 @@ const AccountByOthers2 = () => {
       }
       try {
         let mail = formData.email
-        const res = await axios.get(`http://localhost:3001/api/account/${accountName}/email/${mail}`)
+        const res = await axios.get(`https://shared-diary-1.onrender.com/api/account/${accountName}/email/${mail}`)
         dispatch(signInSuccess(data.email))
         console.log("accountName: ",accountName, "| mail: ",mail)
         dispatch(updateAccountInfo({accountName, mail}))
