@@ -16,6 +16,7 @@ const Main = () => {
   const dynamicImageUrl = theme;
   const [isShared, setIsShared] = useState(true);
   const [menuVisible, setMenuVisible] = useState(false);
+  const [render, setRender] = useState(false)
 
   const handleToggle = () => {
     setIsShared(!isShared);
@@ -33,9 +34,10 @@ const Main = () => {
       console.log(accountName)
       const res = await axios.get(`https://shared-diary-1.onrender.com/api/account/${accountName}/theme`)
       dispatch(updateAccountDetails({color, theme:res.data}))
+      setRender(!render)
     }
     getaAndUpdateTheme()
-  },[theme])
+  },[theme,render])
 
   return (
     <div className='main' style={{ backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${dynamicImageUrl})` }}>
