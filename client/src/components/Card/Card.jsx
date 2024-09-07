@@ -1,18 +1,50 @@
-import React from "react";
-import "./style.css";
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import axios from 'axios';
+import './style.css';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const Card = () => {
-  let description = "Duis vestibulum justo non turpis ultricies, vel malesuada justo aliquet. Phasellus aliquet lobortis tincidunt. Mauris dolor sem, bibendum ut dolor nec, convallis bibendum lacus. Maecenas non cursus tortor. In quis justo blandit arcu bibendum pharetra. Aenean at nunc maximus, feugiat neque id, tempus tortor. Ut molestie non ligula sit amet sodales. Donec eu arcu vel eros congue fringilla vitae porta leo. Nulla est libero, egestas ut felis quis, blandit sodales risus. Vestibulum lobortis nisl in eros venenatis ornare. Nam quis libero augue. Cras elementum orci eget semper lobortis.".slice(0,400)
-  let tags = "#Etiam et purus turpis pellentesque tempor".split(" ").join(" #").toLocaleLowerCase()
+import { setEditMode, setCurrentDiary, toggle } from '../../redux/user/userSlice';
+import { faDeleteLeft, faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
+
+const Card = ({ diary }) => {
+  const { color, accountName, currentUser } = useSelector(state => state.user);
+  const [newColor, setNewColor] = useState(color)
+  const dispatch = useDispatch();
+console.log(diary.email)
+useEffect(()=>{
+  const getColor = async()=>{
+    const res = await axios.get(`http://localhost:3001/api/account/${accountName}/color/${diary.email}`)
+    setNewColor(res.data.color)
+  }
+  getColor()
+},[newColor])
+  const handleDelete = async () => {
+    try {
+      await axios.delete(`http://localhost:3001/api/account/diaries/${accountName}/${diary._id}`);
+      dispatch(toggle())
+    } catch (error) {
+      console.error('Error deleting diary', error);
+    }
+  };
+
+  const handleEdit = () => {
+    dispatch(setEditMode(true));
+    dispatch(setCurrentDiary(diary));
+  };
+
   return (
-    <div className="card" style={{ background: `rgba(4, 59, 92, 0.5)` }}>
-      <div className="title">Lorem ipsum dolor sit amet</div>
-      <div className="description">
-        {description}...
+    <div className="card" style={{ background: `${newColor}` }}>
+      <div className="title">{diary.title}</div>
+      <div className="description">{diary.description.slice(0,400)}</div>
+      <div style={{width:'100%'}}>
+      <div className="tags">{diary.tags[0]?'#':''}{diary.tags.join(" #")}</div>
+      <div className="location">{diary.location?'@':''}{diary.location}</div>
       </div>
-      <div className="tags">
-      {tags}
-      </div>
+      {currentUser==diary.email?<div className="actions">
+        <div onClick={handleEdit}><FontAwesomeIcon icon={faEdit}/></div>
+        <div onClick={handleDelete}><FontAwesomeIcon color='red' icon={faTrash}/></div>
+      </div>:''}
     </div>
   );
 };

@@ -1,26 +1,21 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './style.css'
 import logo from '../../assets/images/logo.png'
-import artistic from '../../assets/images/artistic.png'
-import dream from '../../assets/images/dream.png'
-import fantasy from '../../assets/images/fantasy.png'
-import late_night from '../../assets/images/late_night.png'
-import missing_someone from '../../assets/images/missing_someone.png'
-import nostolgia from '../../assets/images/nostolgia.png'
-import out_of_the_world from '../../assets/images/out_of_the_world.png'
-import romantic from '../../assets/images/romantic.png'
-import sun_rise from '../../assets/images/sun_rise.png'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsisV } from '@fortawesome/free-solid-svg-icons'
 import Diary from '../../components/Diary/Diary'
-import ToDo from '../../components/ToDo/ToDo'
 import SideMenu from '../../components/SideMenu/SideMenu'
+import { useDispatch, useSelector } from 'react-redux'
+import axios from 'axios'
+import { updateAccountDetails } from '../../redux/user/userSlice'
 
 
 const Main = () => {
-  const dynamicImageUrl = dream;
+  const {theme, color, accountName} = useSelector(state=>state.user)
+  const dispatch = useDispatch()
+  const dynamicImageUrl = theme;
   const [isShared, setIsShared] = useState(true);
-  const [menuVisible, setMenuVisible] = useState(false); // Manage side menu visibility
+  const [menuVisible, setMenuVisible] = useState(false);
 
   const handleToggle = () => {
     setIsShared(!isShared);
@@ -33,35 +28,48 @@ const Main = () => {
   const handleCloseMenu = () => {
     setMenuVisible(false);
   };
+  useEffect(()=>{
+    const getaAndUpdateTheme = async ()=>{
+      console.log(accountName)
+      const res = await axios.get(`http://localhost:3001/api/account/${accountName}/theme`)
+      dispatch(updateAccountDetails({color, theme:res.data}))
+    }
+    getaAndUpdateTheme()
+  },[theme])
 
   return (
     <div className='main' style={{ backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${dynamicImageUrl})` }}>
-      <div style={{ height: '50px', width: '50px', borderRadius: '50px', marginTop: '10px', marginLeft: '10px', padding: '2px', border: '2px solid white', position: 'absolute' }}>
+      <div style={{position: 'absolute', display:'flex', width:'100vw', justifyContent:'space-between', alignItems:'center'}}>
+      <div style={{ height: '50px', width: '50px', borderRadius: '50px', marginTop: '10px', marginLeft: '10px', padding: '2px', border: '2px solid white', display:'flex' }}>
         <img style={{ height: '50px', width: '50px', borderRadius: '50px' }} src={logo} alt="Logo" />
       </div>
-
-      <div className='toggle-container'>
+      <h1 style={{textAlign:'center', marginTop:'10px', color:'white', fontWeight:'900'}}>Shared Diary</h1>
+      <div style={{height:'50px', width:'150px', display:'flex', justifyContent:'flex-end', alignItems:'center'}} onClick={handleMenuClick}>
+      <FontAwesomeIcon style={{color:'white', marginRight:'30px', marginTop:'20px', height:'20px', width:'20px'}} icon={faEllipsisV} />
+      </div>
+      </div>
+      
+      {/* <div className='toggle-container'>
         <label className='switch'>
           <input type='checkbox' checked={isShared} onChange={handleToggle} />
           <span className='slider'>
             <span className='slider-label'>{isShared ? 'Shared' : 'Personal'}</span>
           </span>
         </label>
-      </div>
+      </div> */}
       
-      <div className='options'>
+      {/* <div className='options'>
         <div className='sharedOptions'>
-          <div className='clip'>Diary</div>
-          <div className='clip' style={{ background: '#4CAF50', color: '#fff' }}>ToDo</div>
+          <div className='clip' style={{ background: '#4CAF50', color: '#fff' }}>Shared Diary</div>
+          <div className='clip'>ToDo</div>
           <div className='clip'>Timeline</div>
           <div className='clip'>Group Chat</div>
           <FontAwesomeIcon className='clipThreeDot' icon={faEllipsisV} onClick={handleMenuClick} />
         </div>
-      </div>
+      </div> */}
 
       <div className='contentArea'>
-        {/* <Diary/> */}
-        <ToDo />
+        <Diary/>
       </div>
 
       <SideMenu isVisible={menuVisible} onClose={handleCloseMenu} />

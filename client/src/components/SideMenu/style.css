@@ -44,7 +44,7 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
-    padding: 20px; /* Optional: for some padding around menu items */
+    padding: 20px; 
   }
   
   .side-menu .menu-items ul {
@@ -54,7 +54,7 @@
     margin-top: 50px;
     display: flex;
     flex-direction: column;
-    gap: 10px; /* Space between items */
+    gap: 10px; 
   }
   
   .side-menu .menu-items ul li {
@@ -63,16 +63,16 @@
     cursor: pointer;
     color: white;
     font-weight: 700;
-    background-color: #33333390; /* Optional: to make items more distinct */
+    background-color: #33333390; 
     text-align: center;
   }
   
   .side-menu .menu-items ul li:hover {
-    background-color: #555; /* Optional: to highlight items on hover */
+    background-color: #555; 
   }
   
   .side-menu .signout-container {
-    margin-top: auto; /* Pushes the container to the bottom */
+    margin-top: auto; 
     padding: 20px;
   }
   
@@ -83,7 +83,7 @@
     cursor: pointer;
     color: white;
     font-weight: 700;
-    background-color: #d9534f; /* Color for the sign-out button */
+    background-color: #d9534f; 
     text-align: center;
   }
   .side-menu .signoutbutton:hover{

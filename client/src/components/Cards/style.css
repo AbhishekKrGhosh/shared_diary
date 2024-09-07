@@ -8,5 +8,5 @@
     scrollbar-width: none;
 }
 .cards::-webkit-scrollbar {
-    display: none; /* Hide scrollbar */
+    display: none; 
 }

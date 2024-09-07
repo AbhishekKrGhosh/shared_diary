@@ -1,9 +1,13 @@
 .form {
     width: 25%;
+    height: 70vh;
     right: 0;
     position: fixed; 
     margin-right: 30px;
     margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     
 }
 .box2{
@@ -41,6 +45,9 @@
 ::placeholder {
     color: rgba(193, 193, 193, 0.5);
     opacity: 1;
+  }
+  .desc{
+    height: 80px;
   }
   .checkAccountButtonIcon2{
     height: 60px;

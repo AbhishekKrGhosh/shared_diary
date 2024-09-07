@@ -5,5 +5,5 @@
     scrollbar-width: none;
 }
 .diary::-webkit-scrollbar {
-    display: none; /* Hide scrollbar */
+    display: none; 
 }

@@ -8,6 +8,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { updateAccountDetails } from '../../redux/user/userSlice';
 import axios from 'axios';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEllipsisV } from "@fortawesome/free-solid-svg-icons";
+import SideMenu from '../../components/SideMenu/SideMenu'
 
 const colorOptions = [
   { color: "#191970", name: "Blue", colorCode: "rgba(25, 25, 112, 0.5)" },
@@ -24,7 +27,7 @@ const colorOptions = [
   { color: "#D4AF37", name: "Gold", colorCode: "rgba(212, 175, 55, 0.5)" }
 ];
 
-const Home2 = () => {
+const Color = () => {
   
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -32,6 +35,15 @@ const Home2 = () => {
   const [email, setEmail] = useState("");
   const [color, setColor] = useState("")
   const [color2, setColor2] = useState('')
+  const [menuVisible, setMenuVisible] = useState(false);
+
+  const handleMenuClick = () => {
+    setMenuVisible(true);
+  };
+
+  const handleCloseMenu = () => {
+    setMenuVisible(false);
+  };
 
   const settings = {
     dots: true,
@@ -64,10 +76,16 @@ const Home2 = () => {
   }
   return (
     <div className='home'>
+        <div style={{position: 'absolute', display:'flex', width:'100vw', justifyContent:'space-between', alignItems:'center'}}>
+      <div style={{ height: '50px', width: '50px', borderRadius: '50px', marginTop: '10px', marginLeft: '10px', padding: '2px', border: '2px solid white', display:'flex' }}>
+        <img style={{ height: '50px', width: '50px', borderRadius: '50px' }} src={logo} alt="Logo" />
+      </div>
+      <h1 style={{textAlign:'center', marginTop:'10px', color:'white', fontWeight:'900'}}>Shared Diary</h1>
+      <div style={{height:'50px', width:'150px', display:'flex', justifyContent:'flex-end', alignItems:'center'}} onClick={handleMenuClick}>
+      <FontAwesomeIcon style={{color:'white', marginRight:'30px', marginTop:'20px', height:'20px', width:'20px'}} icon={faEllipsisV} />
+      </div>
+      </div>
       <div className='homeContent2'>
-      <div className='logoContainer'>
-        <img className='logo' src={logo}/>
-        </div>
 
         <div className="textHead">Choose Card Color</div>
         <div className="color-carousel-container">
@@ -93,8 +111,10 @@ const Home2 = () => {
     <button onClick={handleSave} className='saveButton'>SAVE</button>
   </div>
       </div>
+      <SideMenu isVisible={menuVisible} onClose={handleCloseMenu} />
+
     </div>
   );
 }
 
-export default Home2;
+export default Color;

@@ -1,5 +1,6 @@
 import Account from "../models/account.model.js";
 
+
 export const create_account = async (req, res, next) => {
     try {
         const { account_name, email } = req.body;
@@ -21,6 +22,8 @@ export const create_account = async (req, res, next) => {
         next(error);
     }
 };
+
+
 
 export const add_email_to_account = async (req, res, next) => {
     try {
@@ -46,12 +49,26 @@ export const add_email_to_account = async (req, res, next) => {
     }
 };
 
+export const getEmailsInAccount = async (req, res, next) => {
+  try {
+    const { account_name } = req.params;
+
+    const account = await Account.findOne({ account_name });
+
+    if (!account) {
+      return res.status(404).json({ message: 'Account not found' });
+    }
+
+    res.status(200).json({ emails: account.emails });
+  } catch (error) {
+    next(error); 
+  }
+};
 
 export const check_account_name = async (req, res, next) => {
     try {
-        const { account_name } = req.params; // Get the account_name from the route parameters
+        const { account_name } = req.params;
 
-        // Search for the account in the database by account_name
         const account = await Account.findOne({ account_name });
 
         if (account) {
@@ -66,16 +83,13 @@ export const check_account_name = async (req, res, next) => {
 
 export const check_account_name_not_exist = async (req, res, next) => {
     try {
-        const { account_name } = req.params; // Get the account_name from the route parameters
+        const { account_name } = req.params;
 
-        // Search for the account in the database by account_name
         const account = await Account.findOne({ account_name });
 
         if (!account) {
-            // If no account is found, return a success response
             return res.status(200).json({ not_exist: true, message: 'Account name does not exist' });
         } else {
-            // If account exists, return a 409 conflict response
             return res.status(409).json({ not_exist: false, message: 'Account name exists' });
         }
     } catch (error) {
@@ -86,24 +100,19 @@ export const check_account_name_not_exist = async (req, res, next) => {
 
 export const check_email_in_account = async (req, res, next) => {
     try {
-        const { account_name, email } = req.params; // Get account_name and email from the route parameters
+        const { account_name, email } = req.params; 
 
-        // Search for the account in the database by account_name
         const account = await Account.findOne({ account_name });
 
         if (!account) {
-            // If no account is found, return a 404 response
             return res.status(404).json({ message: 'Account not found' });
         }
 
-        // Check if the email exists in the emails array
         const emailExists = account.emails.includes(email);
 
         if (emailExists) {
-            // If email exists, return a 200 response with confirmation
             return res.status(200).json({ email_exists: true, message: 'Email exists in the account' });
         } else {
-            // If email does not exist, return a 404 response
             return res.status(404).json({ email_exists: false, message: 'Email does not exist in the account' });
         }
     } catch (error) {
@@ -112,3 +121,158 @@ export const check_email_in_account = async (req, res, next) => {
 };
 
 
+export const createDiary = async (req, res) => {
+    try {
+      const { account_name, email, title, description, location, tags } = req.body;
+      
+      const account = await Account.findOne({ account_name });
+  
+      if (!account) {
+        return res.status(404).json({ message: 'Account not found' });
+      }
+  
+      const newDiary = { title, description, location, tags, email };
+  
+      account.diaries.push(newDiary);
+      await account.save();
+  
+      res.status(201).json({ message: 'Diary entry added successfully', diary: newDiary });
+    } catch (error) {
+      res.status(500).json({ message: 'Error adding diary entry', error });
+    }
+  }
+
+  export const getDiary = async (req, res) => {
+    try {
+      const { account_name } = req.params;
+  
+      const account = await Account.findOne({ account_name });
+      if (!account) {
+        return res.status(404).json({ message: 'Account not found' });
+      }
+  
+      res.status(200).json(account.diaries);
+    } catch (error) {
+      res.status(500).json({ message: 'Error fetching diary entries', error });
+    }
+  }
+
+  export const updateDiary = async (req, res) => {
+    try {
+      const { account_name, diaryId } = req.params;
+      const { title, description, location, tags } = req.body;
+  
+      const account = await Account.findOne({ account_name });
+      if (!account) {
+        return res.status(404).json({ message: 'Account not found' });
+      }
+  
+      const diary = account.diaries.id(diaryId);
+      if (!diary) {
+        return res.status(404).json({ message: 'Diary entry not found' });
+      }
+  
+      diary.title = title || diary.title;
+      diary.description = description || diary.description;
+      diary.location = location || diary.location;
+      diary.tags = tags || diary.tags;
+  
+      await account.save();
+  
+      res.status(200).json({ message: 'Diary entry updated successfully', diary });
+    } catch (error) {
+      res.status(500).json({ message: 'Error updating diary entry', error });
+    }
+  }
+
+  export const deleteDiary = async (req, res) => {
+    try {
+      const { account_name, diaryId } = req.params;
+      console.log(account_name, diaryId)
+      const account = await Account.findOne({ account_name });
+      if (!account) {
+        return res.status(404).json({ message: 'Account not found' });
+      }
+  
+      const diary = account.diaries.id(diaryId);
+      console.log(diary)
+      if (!diary) {
+        return res.status(404).json({ message: 'Diary entry not found' });
+      }
+  
+      account.diaries.pull(diaryId); 
+      await account.save();
+  
+      res.status(200).json({ message: 'Diary entry deleted successfully' });
+    } catch (error) {
+      res.status(500).json({ message: 'Error deleting diary entry', error });
+    }
+  };
+  
+
+export const updateThemeAndColor = async (req, res) => {
+  try {
+      const { account_name, theme, email, color } = req.body;
+
+      const sanitizedEmail = email ? email.replace(/\./g, '_') : null;
+
+      const account = await Account.findOne({ account_name });
+
+      if (!account) {
+          return res.status(404).json({ message: 'Account not found' });
+      }
+
+      if (theme) {
+          account.theme = theme;
+      }
+
+      if (sanitizedEmail && color) {
+          account.colors.set(sanitizedEmail, color);
+      }
+
+      await account.save();
+
+      res.status(200).json({ message: 'Theme and/or color updated successfully', account });
+  } catch (error) {
+      console.error('Error details:', error);
+
+      res.status(500).json({ message: 'Error updating theme and/or color', error: error.message });
+  }
+};
+
+export const getTheme = async (req, res) => {
+  try {
+    const { account_name } = req.params;
+
+    const account = await Account.findOne({ account_name });
+    if (!account) {
+      return res.status(404).json({ message: 'Account not found' });
+    }
+
+    res.status(200).json(account.theme);
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching diary entries', error });
+  }
+}
+
+export const getColor = async (req, res) => {
+  try {
+    const { account_name, email } = req.params;
+
+    const sanitizedEmail = email ? email.replace(/\./g, '_') : null;
+
+    const account = await Account.findOne({ account_name });
+    if (!account) {
+      return res.status(404).json({ message: 'Account not found' });
+    }
+    const color = account.colors.get(sanitizedEmail);
+
+    if (color) {
+      res.status(200).json({ color });
+    } else {
+      res.status(404).json({ message: 'Color not found for the given email' });
+    }
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching color', error: error.message });
+  }
+};

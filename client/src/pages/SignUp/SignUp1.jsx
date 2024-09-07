@@ -26,9 +26,7 @@ const SignUp1 = () => {
     try {
       const response = await axios.get(`http://localhost:3001/api/account/check/not-exist/${accountName}`);
       
-      // Check the API response
       if (response.data.not_exist) {
-        // Dispatch the account name to Redux and navigate to the next step
         dispatch(updateAccountName({ accountName }));
         navigate('/sign-up-step2');
       } else {
@@ -36,7 +34,6 @@ const SignUp1 = () => {
       }
 
     } catch (error) {
-      // Handle API errors (like 409 conflict)
       if (error.response && error.response.status === 409) {
         setErrorMessage('Account already exists');
       } else {
