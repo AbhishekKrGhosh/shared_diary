@@ -58,8 +58,8 @@
 
 1. **Clone the repository**:
     ```bash
-    git clone https://github.com/yourusername/shared-diaries.git
-    cd shared-diaries
+    git clone https://github.com/AbhishekKrGhosh/shared_diary.git
+    cd shared_diary
     ```
 
 2. **Install dependencies**:
