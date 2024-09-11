@@ -1,10 +1,10 @@
-# Shared Diaries - MERN Stack Project
+# Shared Diary - MERN Stack Project
 
 ## Project Overview
 
- <img width="1438" alt="Screenshot 2024-09-08 at 11 21 54 PM" src="https://github.com/user-attachments/assets/43f6cfc5-e3c4-45b8-9fe5-cbf71e3b7669">
+ <img width="1438" alt="Screenshot 2024-09-08 at 11 21 54 PM" src="https://github.com/user-attachments/assets/8d14e6a0-62ec-4f3f-b427-115241c41bc1">
 <img width="1420" alt="Screenshot 2024-09-08 at 11 22 04 PM" src="https://github.com/user-attachments/assets/842f553b-a9be-4bd7-a824-eb8c4ad961e0">
-**Shared Diaries** is a collaborative web application designed to facilitate shared diary creation and joint account management among multiple participants. This platform emphasizes security and provides a seamless user experience with various authentication methods, real-time collaboration, and advanced customization options.
+**Shared Diary** is a collaborative web application designed to facilitate shared diary creation and joint account management among multiple participants. This platform emphasizes security and provides a seamless user experience with various authentication methods, real-time collaboration, and advanced customization options.
 
 ## Features
 
@@ -89,4 +89,4 @@
 
 Contributions are welcome! Please fork the repository and submit a pull request. For significant changes, please open an issue first to discuss what you would like to change.
 
-Enjoy using **Shared Diaries**! If you encounter any issues, feel free to open an issue on GitHub.
+Enjoy using **Shared Diary**! If you encounter any issues, feel free to open an issue on GitHub.
