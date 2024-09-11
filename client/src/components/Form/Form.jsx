@@ -43,6 +43,7 @@ const Form = () => {
       } else {
         await axios.post('https://shared-diary-1.onrender.com/api/account/diaries', {
           ...formData,
+          tags: formData.tags.split(',').map(tag => tag.trim()),
           account_name: accountName,
           email: currentUser
         });
