@@ -4,10 +4,13 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './style.css';
 import { updateAccountName } from '../../redux/user/userSlice';
+import { Rings } from 'react-loading-icons'
+
 
 const SignUp1 = () => {
   const [accountName, setAccountName] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const [load, setLoad] = useState(false)
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -24,16 +27,20 @@ const SignUp1 = () => {
     }
 
     try {
+      setLoad(true)
       const response = await axios.get(`https://shared-diary-1.onrender.com/api/account/check/not-exist/${accountName}`);
       
       if (response.data.not_exist) {
         dispatch(updateAccountName({ accountName }));
+        setLoad(false)
         navigate('/sign-up-step2');
       } else {
+        setLoad(false)
         setErrorMessage('Account already exists');
       }
 
     } catch (error) {
+      setLoad(false)
       if (error.response && error.response.status === 409) {
         setErrorMessage('Account already exists');
       } else {
@@ -58,7 +65,8 @@ const SignUp1 = () => {
               onChange={handleInputChange}
             />
             <button type='submit' className='checkAccountButton'>
-              Create
+              {load?<Rings/>
+              :'Create'}
             </button>
           </form>
           {errorMessage && <div className='error-message'>{errorMessage}</div>}

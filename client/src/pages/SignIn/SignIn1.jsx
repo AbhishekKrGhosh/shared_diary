@@ -1,14 +1,16 @@
 import React, { useState } from 'react'
 import './style.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCircleRight } from '@fortawesome/free-solid-svg-icons'
+import { faCircleRight, faSpinner } from '@fortawesome/free-solid-svg-icons'
 import { useDispatch } from 'react-redux'
-import { updateAccountName } from '../../redux/user/userSlice'  // Adjust the path as needed
+import { updateAccountName } from '../../redux/user/userSlice'  
 import { useNavigate, Link } from 'react-router-dom'
+import { Rings } from 'react-loading-icons'
 import axios from 'axios'
 
 const SignIn1 = () => {
   const [accountName, setAccountName] = useState('')
+  const [load, setLoad] = useState(false)
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
@@ -19,14 +21,18 @@ const SignIn1 = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
+      setLoad(true)
       const response = await axios.get(`https://shared-diary-1.onrender.com/api/account/check/${accountName}`)
       if (response.data.exists) {
         dispatch(updateAccountName({ accountName }))
+        setLoad(false)
         navigate('/sign-in-step2')
       } else {
+        setLoad(false)
         alert('Account does not exist')
       }
     } catch (error) {
+      setLoad(false)
       console.error('Error checking account:', error)
       alert('An error occurred')
     }
@@ -47,7 +53,8 @@ const SignIn1 = () => {
               onChange={handleInputChange}
             />
             <button type='submit' className='checkAccountButton'>
-              <FontAwesomeIcon className='checkAccountButtonIcon' icon={faCircleRight} />
+              {load?<Rings className='checkAccountButtonIcon'/>:<FontAwesomeIcon className='checkAccountButtonIcon' icon={faCircleRight} />}
+              
             </button>
           </form>
         </div>

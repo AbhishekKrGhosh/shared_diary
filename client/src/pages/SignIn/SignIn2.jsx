@@ -8,6 +8,7 @@ import axios from 'axios';
 
 const SignIn2 = () => {
   const [formData, setFormData] = useState({});
+  const [err, setErr] = useState('')
   const { error, loading, accountName } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -21,7 +22,6 @@ const SignIn2 = () => {
     try {
       dispatch(signInStart());
 
-      // Use axios instead of fetch
       const res = await axios.post('https://shared-diary-1.onrender.com/api/auth/signin', formData);
       const data = res.data;
       console.log(data)
@@ -38,10 +38,12 @@ const SignIn2 = () => {
         navigate('/main')
     } catch (error) {
         console.log('invalid access: ',error)
+        setErr('invalid access')
         dispatch(signInFailure(data))
     }
 
     } catch (error) {
+      setErr('invalid access')
       dispatch(signInFailure(error));
     }
   };
@@ -75,6 +77,7 @@ const SignIn2 = () => {
             </Link>
           </div>
         </div>
+      <p style={{color:'red'}}>{error ? err :'' }</p>
       </div>
     </div>
   );
