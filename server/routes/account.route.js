@@ -12,10 +12,13 @@ import {
   updateThemeAndColor,
   getTheme,
   getColor,
-  getEmailsInAccount,
+  getEmailsInAccount
 } from "../controllers/account.controller.js";
+import { apiKeyAuth } from "../utils/apiKeyAuth.js";
 
 const router = express.Router();
+
+router.use(apiKeyAuth);
 
 router.post("/create", create_account);
 router.patch("/add-email", add_email_to_account);

@@ -19,17 +19,17 @@ import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { updateAccountDetails } from "../../redux/user/userSlice";
 import { useNavigate } from "react-router-dom";
-import SideMenu from '../../components/SideMenu/SideMenu'
+import SideMenu from "../../components/SideMenu/SideMenu";
 
 const Theme = () => {
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { accountName, currentUser } = useSelector((state) => state.user);
   const [email, setEmail] = useState("");
   const [showInput, setShowInput] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const [theme, setTheme] = useState("")
+  const [theme, setTheme] = useState("");
   const [menuVisible, setMenuVisible] = useState(false);
 
   const handleMenuClick = () => {
@@ -63,47 +63,109 @@ const Theme = () => {
     { image: sun_rise, text: "Sun Rise" },
   ];
 
-  const handleSave = async ()=>{
+  const handleSave = async () => {
     try {
       const response = await axios.patch(
-        `https://shared-diary-1.onrender.com/api/account/${accountName}/update-theme-color`,
+        `${
+          import.meta.env.VITE_API_URL
+        }/api/account/${accountName}/update-theme-color`,
         {
-          account_name:accountName,
+          account_name: accountName,
           email: currentUser,
-          theme
+          theme,
+        },{
+          headers: {
+            'x-api-key': import.meta.env.VITE_API_KEY
+          },
         }
       );
-    console.log(theme)
-    dispatch(updateAccountDetails({theme}))
-    navigate('/main')
+      console.log(theme);
+      dispatch(updateAccountDetails({ theme }));
+      navigate("/main");
     } catch (error) {
       console.error("Error updating theme and color:", error);
     }
-    
-  }
+  };
 
   return (
     <div className="home">
-      <div style={{position: 'absolute', display:'flex', width:'100vw', justifyContent:'space-between', alignItems:'center'}}>
-      <div style={{ height: '50px', width: '50px', borderRadius: '50px', marginTop: '10px', marginLeft: '10px', padding: '2px', border: '2px solid white', display:'flex' }}>
-        <img style={{ height: '50px', width: '50px', borderRadius: '50px' }} src={logo} alt="Logo" />
+      <div
+        style={{
+          position: "absolute",
+          display: "flex",
+          width: "100vw",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
+        <div
+          style={{
+            height: "50px",
+            width: "50px",
+            borderRadius: "50px",
+            marginTop: "10px",
+            marginLeft: "10px",
+            padding: "2px",
+            border: "2px solid white",
+            display: "flex",
+          }}
+        >
+          <img
+            style={{ height: "50px", width: "50px", borderRadius: "50px" }}
+            src={logo}
+            alt="Logo"
+          />
+        </div>
+        <h1
+          style={{
+            textAlign: "center",
+            marginTop: "10px",
+            color: "white",
+            fontWeight: "900",
+          }}
+        >
+          Shared Diary
+        </h1>
+        <div
+          style={{
+            height: "50px",
+            width: "150px",
+            display: "flex",
+            justifyContent: "flex-end",
+            alignItems: "center",
+          }}
+          onClick={handleMenuClick}
+        >
+          <FontAwesomeIcon
+            style={{
+              color: "white",
+              marginRight: "30px",
+              marginTop: "20px",
+              height: "20px",
+              width: "20px",
+            }}
+            icon={faEllipsisV}
+          />
+        </div>
       </div>
-      <h1 style={{textAlign:'center', marginTop:'10px', color:'white', fontWeight:'900'}}>Shared Diary</h1>
-      <div style={{height:'50px', width:'150px', display:'flex', justifyContent:'flex-end', alignItems:'center'}} onClick={handleMenuClick}>
-      <FontAwesomeIcon style={{color:'white', marginRight:'30px', marginTop:'20px', height:'20px', width:'20px'}} icon={faEllipsisV} />
-      </div>
-      </div>
-      <div className="homeContent" style={{height:'100%'}}>
+      <div className="homeContent" style={{ height: "100%" }}>
         <div className="textHead">Choose Theme</div>
         <div className="carousel-container">
           <Slider {...settings}>
             {slidesData.map((slide, index) => (
               <div key={index}>
                 <div style={{ padding: "5px" }}>
-                  <div onClick={()=>setTheme(slide.image)} className="carousel-slide">
+                  <div
+                    onClick={() => setTheme(slide.image)}
+                    className="carousel-slide"
+                  >
                     <img
                       src={slide.image}
-                      style={{ border:`${theme==slide.image?'5px,solid,white':'none'}` }}
+                      style={{
+                        border: `${
+                          theme == slide.image ? "5px,solid,white" : "none"
+                        }`,
+                      }}
                       alt={`Slide ${index + 1}`}
                       className="carousel-image"
                     />
@@ -116,11 +178,12 @@ const Theme = () => {
         </div>
 
         <div className="saveButtonContainer">
-          <button onClick={handleSave} className="saveButton">SAVE</button>
+          <button onClick={handleSave} className="saveButton">
+            SAVE
+          </button>
         </div>
       </div>
       <SideMenu isVisible={menuVisible} onClose={handleCloseMenu} />
-
     </div>
   );
 };

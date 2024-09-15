@@ -3,6 +3,7 @@ import mongoose from 'mongoose'
 import dotenv from 'dotenv'
 import authRoute from './routes/auth.route.js'
 import accountRoute from './routes/account.route.js'
+import testRoute from './routes/test.route.js'
 import cookieParser from 'cookie-parser'
 import cors from 'cors'
 
@@ -25,6 +26,7 @@ app.listen(3001, ()=>{
 
 app.use('/api/account', accountRoute)
 app.use('/api/auth', authRoute)
+app.use('/',testRoute)
 app.use((err, req, res, next)=>{
     const statusCode = err.statusCode || 500
     const message = err.message || "Internal server error"

@@ -6,9 +6,8 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { useSelector } from "react-redux";
 import axios from "axios";
-import logo from '../../assets/images/logo.png'
-import SideMenu from '../../components/SideMenu/SideMenu'
-
+import logo from "../../assets/images/logo.png";
+import SideMenu from "../../components/SideMenu/SideMenu";
 
 const Members = () => {
   const { accountName } = useSelector((state) => state.user);
@@ -16,8 +15,8 @@ const Members = () => {
   const [showInput, setShowInput] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const [emailList, setEmailList] = useState([])
-  const [render, setRender] = useState(false)
+  const [emailList, setEmailList] = useState([]);
+  const [render, setRender] = useState(false);
   const [menuVisible, setMenuVisible] = useState(false);
 
   const handleMenuClick = () => {
@@ -27,14 +26,20 @@ const Members = () => {
   const handleCloseMenu = () => {
     setMenuVisible(false);
   };
-  useEffect(()=>{
-    const getEmails = async()=>{
-        const res = await axios.get(`https://shared-diary-1.onrender.com/api/account/${accountName}/emails`)
-        setEmailList(res.data.emails)
-    }
-    getEmails()
-  },[render])
-  
+  useEffect(() => {
+    const getEmails = async () => {
+      const res = await axios.get(
+        `${import.meta.env.VITE_API_URL}/api/account/${accountName}/emails`,{
+          headers: {
+            'x-api-key': import.meta.env.VITE_API_KEY
+          },
+        }
+      );
+      setEmailList(res.data.emails);
+    };
+    getEmails();
+  }, [render]);
+
   const handleAddClick = async () => {
     if (!email) {
       setError("Please enter a valid email address.");
@@ -46,10 +51,14 @@ const Members = () => {
 
     try {
       const response = await axios.patch(
-        "https://shared-diary-1.onrender.com/api/account/add-email",
+        `${import.meta.env.VITE_API_URL}/api/account/add-email`,
         {
           account_name: accountName,
           email,
+        },{
+          headers: {
+            'x-api-key': import.meta.env.VITE_API_KEY
+          },
         }
       );
 
@@ -57,7 +66,7 @@ const Members = () => {
         console.log("Email added successfully:", response.data);
         setEmail("");
         setShowInput(false);
-        setRender(!render)
+        setRender(!render);
       }
     } catch (error) {
       console.error("Error adding email:", error);
@@ -69,21 +78,82 @@ const Members = () => {
 
   return (
     <div className="home">
-      <div style={{position: 'absolute', display:'flex', width:'100vw', justifyContent:'space-between', alignItems:'center'}}>
-      <div style={{ height: '50px', width: '50px', borderRadius: '50px', marginTop: '10px', marginLeft: '10px', padding: '2px', border: '2px solid white', display:'flex' }}>
-        <img style={{ height: '50px', width: '50px', borderRadius: '50px' }} src={logo} alt="Logo" />
-      </div>
-      <h1 style={{textAlign:'center', marginTop:'10px', color:'white', fontWeight:'900'}}>Shared Diary</h1>
-      <div style={{height:'50px', width:'150px', display:'flex', justifyContent:'flex-end', alignItems:'center'}} onClick={handleMenuClick}>
-      <FontAwesomeIcon style={{color:'white', marginRight:'30px', marginTop:'20px', height:'20px', width:'20px'}} icon={faEllipsisV} />
-      </div>
-      </div>
-      <div className="homeContent" style={{height:'100%'}}>
-      
-        <h1 style={{textAlign:'center', textDecoration:'underline', marginBottom:'20px'}}>
-            Existing Members
+      <div
+        style={{
+          position: "absolute",
+          display: "flex",
+          width: "100vw",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
+        <div
+          style={{
+            height: "50px",
+            width: "50px",
+            borderRadius: "50px",
+            marginTop: "10px",
+            marginLeft: "10px",
+            padding: "2px",
+            border: "2px solid white",
+            display: "flex",
+          }}
+        >
+          <img
+            style={{ height: "50px", width: "50px", borderRadius: "50px" }}
+            src={logo}
+            alt="Logo"
+          />
+        </div>
+        <h1
+          style={{
+            textAlign: "center",
+            marginTop: "10px",
+            color: "white",
+            fontWeight: "900",
+          }}
+        >
+          Shared Diary
         </h1>
-        <div style={{marginBottom:'20px'}}>{emailList.map((item,index)=>(<h2 key={index} style={{textAlign:'center'}}>{item}</h2>))}</div>
+        <div
+          style={{
+            height: "50px",
+            width: "150px",
+            display: "flex",
+            justifyContent: "flex-end",
+            alignItems: "center",
+          }}
+          onClick={handleMenuClick}
+        >
+          <FontAwesomeIcon
+            style={{
+              color: "white",
+              marginRight: "30px",
+              marginTop: "20px",
+              height: "20px",
+              width: "20px",
+            }}
+            icon={faEllipsisV}
+          />
+        </div>
+      </div>
+      <div className="homeContent" style={{ height: "100%" }}>
+        <h1
+          style={{
+            textAlign: "center",
+            textDecoration: "underline",
+            marginBottom: "20px",
+          }}
+        >
+          Existing Members
+        </h1>
+        <div style={{ marginBottom: "20px" }}>
+          {emailList.map((item, index) => (
+            <h2 key={index} style={{ textAlign: "center" }}>
+              {item}
+            </h2>
+          ))}
+        </div>
         <div className="addMembers">
           Add Members
           <div

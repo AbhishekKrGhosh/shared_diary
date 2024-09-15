@@ -117,4 +117,9 @@
   .link:hover {
     text-decoration: underline;
   }
-  
+  .error-message{
+    margin-top: 5px;
+    text-align: center;
+    color: #ff1760;
+    font-weight: 700;
+  }

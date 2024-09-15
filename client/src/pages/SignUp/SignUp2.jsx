@@ -26,8 +26,12 @@ const SignUp2 = () => {
       setError(false);
       console.log(formData);
       const res = await axios.post(
-        "https://shared-diary-1.onrender.com/api/auth/signup",
-        formData
+        `${import.meta.env.VITE_API_URL}/api/auth/signup`,
+        formData,{
+          headers: {
+            'x-api-key': import.meta.env.VITE_API_KEY
+          },
+        }
       );
       const data = res;
       setLoading(false);
@@ -41,10 +45,14 @@ const SignUp2 = () => {
         let mail = formData.email;
         console.log("email:", mail, "| accout name: ", accountName);
         const res2 = await axios.post(
-          "https://shared-diary-1.onrender.com/api/account/create",
+          `${import.meta.env.VITE_API_URL}/api/account/create`,
           {
             account_name: accountName,
             email: mail,
+          },{
+            headers: {
+              'x-api-key': import.meta.env.VITE_API_KEY
+            },
           }
         );
         dispatch(signInSuccess(data.email));
@@ -97,7 +105,11 @@ const SignUp2 = () => {
           </form>
           or
           <OAuth2 />
+          
         </div>
+        <p style={{ textAlign: "center", color: "red", marginTop:'5px' }}>
+          {error && "Something went wrong!"}
+        </p>
         <div className="routeToOther">
           <div>
             <Link className="routeToOtherLink" to="/create-by-others">
@@ -112,9 +124,7 @@ const SignUp2 = () => {
             </Link>
           </div>
         </div>
-        <p style={{ textAlign: "center", color: "red" }}>
-          {error && "Something went wrong!"}
-        </p>
+        
       </div>
     </div>
   );

@@ -10,6 +10,7 @@ import axios from 'axios'
 
 const SignIn1 = () => {
   const [accountName, setAccountName] = useState('')
+  const [errorMessage, setErrorMessage] = useState("");
   const [load, setLoad] = useState(false)
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -20,21 +21,29 @@ const SignIn1 = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+    if (!accountName) {
+      setErrorMessage("Account name cannot be empty");
+      return;
+    }
     try {
       setLoad(true)
-      const response = await axios.get(`https://shared-diary-1.onrender.com/api/account/check/${accountName}`)
+      const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/account/check/${accountName}`,{
+        headers: {
+          'x-api-key': import.meta.env.VITE_API_KEY
+        },
+      })
       if (response.data.exists) {
         dispatch(updateAccountName({ accountName }))
         setLoad(false)
         navigate('/sign-in-step2')
       } else {
         setLoad(false)
-        alert('Account does not exist')
+        setErrorMessage("Account doesn't exists");
       }
     } catch (error) {
       setLoad(false)
       console.error('Error checking account:', error)
-      alert('An error occurred')
+      setErrorMessage("Account doesn't exists")
     }
   }
 
@@ -57,6 +66,7 @@ const SignIn1 = () => {
               
             </button>
           </form>
+          {errorMessage && <div className="error-message">{errorMessage}</div>}
         </div>
         <div className='routeToOther'>
           <div>

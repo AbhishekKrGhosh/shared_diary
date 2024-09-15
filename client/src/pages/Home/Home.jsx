@@ -28,24 +28,28 @@ const colorOptions = [
   { color: "#DC143C", name: "Crimson", colorCode: "rgba(220, 20, 60, 0.5)" },
   { color: "#B22222", name: "Brick", colorCode: "rgba(178, 34, 34, 0.5)" },
   { color: "#008000", name: "Green", colorCode: "rgba(0, 128, 0, 0.5)" },
-  { color: "#9ACD32", name: "Yellow Green", colorCode: "rgba(154, 205, 50, 0.5)" },
+  {
+    color: "#9ACD32",
+    name: "Yellow Green",
+    colorCode: "rgba(154, 205, 50, 0.5)",
+  },
   { color: "#008B8B", name: "Dark Cyan", colorCode: "rgba(0, 139, 139, 0.5)" },
   { color: "#8B4513", name: "Brown", colorCode: "rgba(139, 69, 19, 0.5)" },
   { color: "#008080", name: "Teal", colorCode: "rgba(0, 128, 128, 0.5)" },
-  { color: "#D4AF37", name: "Gold", colorCode: "rgba(212, 175, 55, 0.5)" }
+  { color: "#D4AF37", name: "Gold", colorCode: "rgba(212, 175, 55, 0.5)" },
 ];
 
 const Home = () => {
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { accountName, currentUser } = useSelector((state) => state.user);
   const [email, setEmail] = useState("");
   const [showInput, setShowInput] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const [theme, setTheme] = useState("")
-  const [color, setColor] = useState("")
-  const [color2, setColor2] = useState('')
+  const [theme, setTheme] = useState("");
+  const [color, setColor] = useState("");
+  const [color2, setColor2] = useState("");
 
   const settings = {
     dots: true,
@@ -92,10 +96,14 @@ const Home = () => {
 
     try {
       const response = await axios.patch(
-        "https://shared-diary-1.onrender.com/api/account/add-email",
+        `${import.meta.env.VITE_API_URL}/api/account/add-email`,
         {
           account_name: accountName,
           email,
+        },{
+          headers: {
+            'x-api-key': import.meta.env.VITE_API_KEY
+          },
         }
       );
 
@@ -111,25 +119,30 @@ const Home = () => {
       setLoading(false);
     }
   };
-  const handleSave = async ()=>{
+  const handleSave = async () => {
     try {
       const response = await axios.patch(
-        `https://shared-diary-1.onrender.com/api/account/${accountName}/update-theme-color`,
+        `${
+          import.meta.env.VITE_API_URL
+        }/api/account/${accountName}/update-theme-color`,
         {
-          account_name:accountName,
+          account_name: accountName,
           email: currentUser,
           theme,
           color,
+        },{
+          headers: {
+            'x-api-key': import.meta.env.VITE_API_KEY
+          },
         }
       );
-    console.log(color, theme)
-    dispatch(updateAccountDetails({color, theme}))
-    navigate('/main')
+      console.log(color, theme);
+      dispatch(updateAccountDetails({ color, theme }));
+      navigate("/main");
     } catch (error) {
       console.error("Error updating theme and color:", error);
     }
-    
-  }
+  };
 
   return (
     <div className="home">
@@ -176,13 +189,20 @@ const Home = () => {
         <div className="color-carousel-container">
           <Slider {...settings2}>
             {colorOptions.map((color, index) => (
-              <div key={index} >
+              <div key={index}>
                 <div style={{ padding: "5px" }}>
-                    <div onClick={()=>{setColor(color.colorCode)
-                      setColor2(color.color)}
-                  }
+                  <div
+                    onClick={() => {
+                      setColor(color.colorCode);
+                      setColor2(color.color);
+                    }}
                     className="color-carousel-slide"
-                    style={{ backgroundColor: color.color, border:`${color2==color.color?'5px,solid,white':'none'}` }}
+                    style={{
+                      backgroundColor: color.color,
+                      border: `${
+                        color2 == color.color ? "5px,solid,white" : "none"
+                      }`,
+                    }}
                   >
                     <div className="color-text">{color.name}</div>
                   </div>
@@ -198,10 +218,18 @@ const Home = () => {
             {slidesData.map((slide, index) => (
               <div key={index}>
                 <div style={{ padding: "5px" }}>
-                  <div onClick={()=>setTheme(slide.image)} className="carousel-slide">
+                  <div
+                    onClick={() => setTheme(slide.image)}
+                    className="carousel-slide"
+                  >
                     <img
                       src={slide.image}
-                      style={{ backgroundColor: color.color, border:`${theme==slide.image?'5px,solid,white':'none'}` }}
+                      style={{
+                        backgroundColor: color.color,
+                        border: `${
+                          theme == slide.image ? "5px,solid,white" : "none"
+                        }`,
+                      }}
                       alt={`Slide ${index + 1}`}
                       className="carousel-image"
                     />
@@ -214,7 +242,9 @@ const Home = () => {
         </div>
 
         <div className="saveButtonContainer">
-          <button onClick={handleSave} className="saveButton">SAVE</button>
+          <button onClick={handleSave} className="saveButton">
+            SAVE
+          </button>
         </div>
       </div>
     </div>

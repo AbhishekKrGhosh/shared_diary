@@ -94,7 +94,12 @@
     height: 30px;
     width: 30px;
   }
-
+  .error-message{
+    margin-top: 5px;
+    text-align: center;
+    color: #ff1760;
+    font-weight: 700;
+  }
   
 .routeToOther {
   margin-top: 20px;
