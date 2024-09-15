@@ -13,10 +13,10 @@ import { updateAccountDetails } from '../../redux/user/userSlice'
 const Main = () => {
   const {theme, color, accountName} = useSelector(state=>state.user)
   const dispatch = useDispatch()
-  const dynamicImageUrl = theme;
+  const [dynamicImageUrl,setDynamicImageUrl] = useState(theme)
   const [isShared, setIsShared] = useState(true);
   const [menuVisible, setMenuVisible] = useState(false);
-  const [render, setRender] = useState(false)
+  const [render, setRender] = useState(1)
 
   const handleToggle = () => {
     setIsShared(!isShared);
@@ -34,7 +34,9 @@ const Main = () => {
       console.log(accountName)
       const res = await axios.get(`https://shared-diary-1.onrender.com/api/account/${accountName}/theme`)
       dispatch(updateAccountDetails({color, theme:res.data}))
-      setRender(!render)
+      setDynamicImageUrl(res.data)
+      console.log(res.data)
+      setRender(2)
     }
     getaAndUpdateTheme()
   },[theme,render])

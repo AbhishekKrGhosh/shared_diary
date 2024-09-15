@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   currentUser: null,
   accountName: null,
-  theme: null,
+  theme: '/src/assets/images/fantasy.png',
   color: 'rgba(25, 25, 112, 0.5)',
   loading: false,
   error: false,

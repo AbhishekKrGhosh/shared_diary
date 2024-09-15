@@ -75,7 +75,7 @@ const Home = () => {
     { image: fantasy, text: "Fantasy" },
     { image: late_night, text: "Late Night" },
     { image: missing_someone, text: "Missing Someone" },
-    { image: nostolgia, text: "Nostolgia" },
+    { image: nostolgia, text: "Nostalgia" },
     { image: out_of_the_world, text: "Out Of The World" },
     { image: romantic, text: "Romantic" },
     { image: sun_rise, text: "Sun Rise" },
