@@ -34,7 +34,7 @@ const colorOptions = [
 const Color = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { accountName, currentUser } = useSelector((state) => state.user);
+  const { accountName, currentUser, theme } = useSelector((state) => state.user);
   const [email, setEmail] = useState("");
   const [color, setColor] = useState("");
   const [color2, setColor2] = useState("");
@@ -69,6 +69,7 @@ const Color = () => {
           account_name: accountName,
           email: currentUser,
           color,
+          theme
         },{
           headers: {
             'x-api-key': import.meta.env.VITE_API_KEY

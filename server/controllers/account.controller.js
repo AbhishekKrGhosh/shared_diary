@@ -1,5 +1,5 @@
 import Account from "../models/account.model.js";
-
+import {io} from '../index.js'
 
 export const create_account = async (req, res, next) => {
     try {
@@ -136,6 +136,8 @@ export const createDiary = async (req, res) => {
       account.diaries.push(newDiary);
       await account.save();
   
+      io.emit('update')
+
       res.status(201).json({ message: 'Diary entry added successfully', diary: newDiary });
     } catch (error) {
       res.status(500).json({ message: 'Error adding diary entry', error });
@@ -179,6 +181,8 @@ export const createDiary = async (req, res) => {
   
       await account.save();
   
+      io.emit('update')
+
       res.status(200).json({ message: 'Diary entry updated successfully', diary });
     } catch (error) {
       res.status(500).json({ message: 'Error updating diary entry', error });
@@ -203,6 +207,8 @@ export const createDiary = async (req, res) => {
       account.diaries.pull(diaryId); 
       await account.save();
   
+      io.emit('update')
+      
       res.status(200).json({ message: 'Diary entry deleted successfully' });
     } catch (error) {
       res.status(500).json({ message: 'Error deleting diary entry', error });
@@ -232,6 +238,8 @@ export const updateThemeAndColor = async (req, res) => {
 
       await account.save();
 
+      io.emit('update', { account_name, theme, email, color });
+      
       res.status(200).json({ message: 'Theme and/or color updated successfully', account });
   } catch (error) {
       console.error('Error details:', error);

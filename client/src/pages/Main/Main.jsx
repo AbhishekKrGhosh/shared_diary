@@ -7,7 +7,10 @@ import Diary from "../../components/Diary/Diary";
 import SideMenu from "../../components/SideMenu/SideMenu";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
+import io from 'socket.io-client'
 import { updateAccountDetails } from "../../redux/user/userSlice";
+
+const socket = io(import.meta.env.VITE_API_URL);
 
 const Main = () => {
   const { theme, color, accountName } = useSelector((state) => state.user);
@@ -45,6 +48,21 @@ const Main = () => {
     };
     getaAndUpdateTheme();
   }, [theme, render]);
+
+  useEffect(() => {
+    socket.on('update', (data) => {
+      console.log('Update received:', data);
+      if (data.account_name === accountName) {
+        // Update state based on the received data
+        setDynamicImageUrl(data.theme);
+        // Additional state updates if needed
+      }
+    });
+
+    return () => {
+      socket.off('update');
+    };
+  }, [accountName]);
 
   return (
     <div

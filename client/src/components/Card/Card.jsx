@@ -14,6 +14,9 @@ import {
   faEdit,
   faTrash,
 } from "@fortawesome/free-solid-svg-icons";
+import io from "socket.io-client";
+
+const socket = io(import.meta.env.VITE_API_URL); 
 
 const Card = ({ diary }) => {
   const { color, accountName, currentUser } = useSelector(
@@ -36,6 +39,11 @@ const Card = ({ diary }) => {
       setNewColor(res.data.color);
     };
     getColor();
+    socket.on('update', getColor);
+
+    return () => {
+      socket.off('update', getColor);
+    };
   }, [newColor]);
   const handleDelete = async () => {
     try {
