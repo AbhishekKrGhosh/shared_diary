@@ -40,6 +40,15 @@ server.listen(3001, () => {
   console.log(`Server running on port 3001`);
 });
 
+setInterval(async () => {
+  try {
+    await fetch(`${process.env.SERVER_URL}/test`);
+    console.log('Keep-alive ping sent');
+  } catch (error) {
+    console.error('Keep-alive ping failed:', error.message);
+  }
+}, 5 * 60 * 1000);
+
 app.use('/api/account', accountRoute)
 app.use('/api/auth', authRoute)
 app.use('/',testRoute)
